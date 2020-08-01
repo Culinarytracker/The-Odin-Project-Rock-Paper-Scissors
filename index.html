@@ -6,7 +6,47 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1>Open the console to play!</h1>
+        <h1>Welcome to Carl's Rock-Paper-Scissors Game!!!</h1>
+        <div id="welcome_container">
+            <p>This is a simple game. Rock beats scissors beats paper beats rock beats scissors beats paper beats...</p>
+            <p>You know how this works.</p>
+            <p>First one to 5 points wins!</p>
+        </div>
+        <div id="name_wrapper">
+            <label for="nameGet">Enter your name: </label>
+            <input type="text" name="nameGet" id="player_name" autocomplete="off" autofocus>
+            <button id="name_submit">OK</button>
+        </div>
+
+        <div id="game_wrapper" class="hidden">
+            <div id="scoreboard">
+            
+                <div id="compScore" class="score">
+                    <h1>Computer</h1>
+                    <h1>0</h1>
+                </div>
+
+                <div id="round" class="score">
+                    <h1>Round  </h1>
+                    <h1 id="current_round">1</h1>
+                </div>
+
+                <div id="playerScore" class="score">
+                    <h1> Player </h1>
+                    <h1>0</h1>
+                </div>
+            </div>
+            <div id="result"><h1>Good Luck!</h1></div>
+            <div id="buttons_container">
+                <button>ROCK</button>
+                <button>PAPER</button>
+                <button>SCISSORS</button>
+            </div>
+            <div id="reset" class="hidden">
+                <button>Play Again</button>
+            </div>
+        </div>
+
         <script src="script.js"></script>
     </body>
 </html>

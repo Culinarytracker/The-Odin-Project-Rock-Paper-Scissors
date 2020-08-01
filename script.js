@@ -10,19 +10,43 @@ function computerPlay() {
    }
 }
 
-let capFirst = (input) => (input.charAt(0).toUpperCase() + input.substr(1).toLowerCase());
 
-let checkPlayerSelection = (x) => ((x=="rock")||(x=="paper")||(x=="scissors"));
+const rock = document.querySelector('#buttons_container').children[0];
+const paper = document.querySelector('#buttons_container').children[1];
+const scissors = document.querySelector('#buttons_container').children[2];
+const nameSubmitButton = document.querySelector('#name_submit');
+const result = document.querySelector('#result').lastElementChild;
+const currentRound = document.querySelector('#current_round');
+const playerScore = document.querySelector('#playerScore').lastElementChild;
+const compScore = document.querySelector('#compScore').lastElementChild;
+const resetButton = document.querySelector('#reset').firstElementChild;
 
-function getPlayerSelection() {
-    let playerSelection = prompt('Choose "Rock", "Paper" or "Scissors":').trim();
-    while (!checkPlayerSelection(playerSelection.toLowerCase())) {
-        playerSelection = prompt('Invalid Answer. Please Choose "Rock", "Paper" or "Scissors":').trim();
-    }
-    return capFirst(playerSelection);
+nameSubmitButton.addEventListener('click', function() {
+    document.querySelector('#playerScore').firstElementChild.textContent = document.querySelector('#player_name').value;
+    document.querySelector('#name_wrapper').classList.add('hidden');
+    document.querySelector('#game_wrapper').classList.remove('hidden');
+});
+
+rock.addEventListener('click', () => playRound('Rock'));
+paper.addEventListener('click', () => playRound('Paper'));
+scissors.addEventListener('click', () => playRound('Scissors'));
+resetButton.addEventListener('click', function(){
+     playerScore.textContent=0;
+     compScore.textContent=0;
+     currentRound.textContent=1;
+     result.textContent='Good Luck!';
+     document.querySelector('#reset').classList.add('hidden');     
+     document.querySelector('#buttons_container').classList.remove('hidden');
+
+});
+
+
+
+
+
+function checkForTie(computerSelection, playerSelection){ 
+    return (computerSelection == playerSelection);
 }
-
-let checkForTie = (computerSelection, playerSelection) => (computerSelection == playerSelection);
 
 function checkPlayerWin(computerSelection, playerSelection) {
     if (computerSelection=="Rock") {
@@ -34,55 +58,29 @@ function checkPlayerWin(computerSelection, playerSelection) {
     }
 }
 
-function playRound() {
-    player = getPlayerSelection();
+function playRound(player) {
+
+    
     computer = computerPlay();
     if (checkForTie(computer, player)) {
-        console.log(`\nTie Game! Both you and the computer chose ${player}.`);
-        return 1;
+        result.textContent=(`Tie Game! Both you and the computer chose ${player}.`);
+        
     }else if (checkPlayerWin(computer, player)) {
-        console.log(`\n${player} beats ${computer}! You Win!`);
-        return 2;
+        result.textContent=(`\n${player} beats ${computer}! You Win!`);
+        playerScore.textContent=Number(playerScore.textContent)+1;
     }else {
-        console.log(`\n${computer} beats ${player}! Computer Wins!`);
-        return 3;
+        result.textContent=(`\n${computer} beats ${player}! Computer Wins!`);
+        compScore.textContent=Number(compScore.textContent)+1;
     }
-}
-
-function sanitizeNumber(n) {
-    if (!isNaN(n.trim()) && n.trim()%1==0) {
-        return n;
-    }else {
-        return sanitizeNumber(prompt("That's not a valid number. How many rounds do you want to play?"));
-    }
-}
-
-function game(numOfRounds) {
-    let score = [0, 0];
-    let gamesPlayed = 0;
-    let player;
-    let computer;
-    let currentRound;
-    for (let i=0; i<numOfRounds; i++){
-        gamesPlayed++;
-        currentRound=playRound();
-        if (currentRound==1) {
-            console.log(`\nScore after ${gamesPlayed} games:\nYou:  ${score[0]}\nComputer: ${score[1]}`);
-        }else if (currentRound==2) {
-            score[0]++;
-            console.log(`\nScore after ${gamesPlayed} games:\nYou:  ${score[0]}\nComputer: ${score[1]}`);
+    currentRound.textContent=Number(currentRound.textContent)+1;
+    if (playerScore.textContent >= 5 || compScore.textContent >= 5) {
+        document.querySelector('#buttons_container').classList.add('hidden');
+        if (playerScore.textContent >= 5) {
+            result.textContent=(`Congratulations, ${document.querySelector('#player_name').value} wins!`);
         }else {
-            score[1]++;
-            console.log(`\nScore after ${gamesPlayed} games:\nYou:  ${score[0]}\nComputer: ${score[1]}`);
+            result.textContent=(`The Computer Won This Time. Better Luck Next Time`);
         }
-    }
-    if (score[0]>score[1]) {
-        console.log(`\nCongratulations to You! After ${gamesPlayed} rounds you beat the computer ${score[0]} to ${score[1]}.`);
-    }else if (score[0]<score[1]) {
-        console.log(`\nComputer Wins! After ${gamesPlayed} rounds you were beat ${score[0]} to ${score[1]}.`);
-    }else {
-        console.log(`\nIt ends in a tie! After ${gamesPlayed} rounds it was tied at ${score[0]}.`);
+        document.querySelector('#reset').classList.remove("hidden");
     }
 }
 
-game(sanitizeNumber(prompt('How many rounds would you like to play?')));

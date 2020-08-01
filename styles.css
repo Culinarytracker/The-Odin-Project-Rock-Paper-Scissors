@@ -1,3 +1,54 @@
 h1 {
     text-align: center;
 }
+
+.hidden {
+    display: none !important;
+}
+
+#name_wrapper {
+    width: 60vw;
+    margin-left: 20vw;
+    margin-top: 10vh;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+button, #player_name {
+    width: 15vw;
+    height: 15vh;
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+    border-radius: 15px;
+    margin-top: 15vh;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+#result {
+    margin-top: 15vh;
+}
+
+input[type=text] {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#welcome_container {
+    width: 50%;
+    margin-left: 25%;
+    align-content: center;
+    background-color: aqua;
+    text-align: center;
+    font-weight: bold;
+    border-style: solid;
+    border-color: black;
+}
+
+#scoreboard, #buttons_container, #reset {
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+
+}
+
